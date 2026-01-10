@@ -16,7 +16,7 @@
 **After downloading, organize your folders as follows (we recommend keeping datasets outside the repo):**
 
 ```
-MR-Mesh-main1/                      # Main repo folder
+M4Human-main/                      # Main repo folder
 mmDataset/                          # (Full processed dataset)
     MR-Mesh/
         rf3dpose_all/
@@ -39,13 +39,23 @@ cached_data_test_vis/               # (Sample Vis dataset)
 
 ```
 
+For example, if we are using "Sample Vis dataset", after downloading "rf3dpose_all.zip" from source, we start from M4Human-main/, perform the following:
+
+```
+cd ..
+mkdir cached_data_test_vis
+mv rf3dpose_all.zip" cached_data_test_vis/
+cd cached_data_test_vis/
+unzip rf3dpose_all.zip
+```
+
 ## 3. Download SMPL Models
 - Download SMPL models from official source or URL.
 - Place them in models/ with the following structure:
-  ```
-    MR-Mesh-main1/
-        models/
-            smplx/
+```
+M4Human-main/
+    models/
+        smplx/
             SMPLX_FEMALE.npz
             SMPLX_FEMALE.pkl
             SMPLX_MALE.npz
@@ -54,7 +64,7 @@ cached_data_test_vis/               # (Sample Vis dataset)
             SMPLX_NEUTRAL.pkl
             smplx_npz.zip
             version.txt
-  ```
+```
 
 ## 4. Demo & Visualization
 - We provide `demo.ipynb` for:

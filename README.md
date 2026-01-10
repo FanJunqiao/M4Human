@@ -5,13 +5,13 @@
   ```sh
   conda env create -f environment.yml
   ```
-- Our point-based method require CUDA pointnet++ acceleration, follow the setup instructions in the P4Transformer repository: [https://github.com/erikwijmans/Pointnet2_PyTorch].
+- Our point-based method require CUDA pointnet++ acceleration, follow the setup instructions in the P4Transformer repository: [here](https://github.com/erikwijmans/Pointnet2_PyTorch).
 
 ## 2. Download Datasets
 - **Full raw dataset:** [URL] Comming Soon
 - **Full processed dataset:** [URL] Comming Soon
 - **Full processed dataset (radar modality):** [URL] Comming Soon
-- **Sample Vis dataset:** [https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgDSzyJNtxJYRZn3lXtWjaM7AYSyj3p1IH0h2ziGGREplO0?e=d1Y85Y]
+- **Sample Vis dataset:** [here](https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgDSzyJNtxJYRZn3lXtWjaM7AYSyj3p1IH0h2ziGGREplO0?e=d1Y85Y)
 
 **After downloading, organize your folders as follows (we recommend keeping datasets outside the repo):**
 

@@ -89,7 +89,7 @@ Our point-based method requires CUDA PointNet++ acceleration. Follow the setup i
 
 ## 5. Click&Run (Step 1.2): SMPL Models Setup
 
-- Download SMPL models from official source or `https://smpl-x.is.tue.mpg.de/`.
+- Download SMPL models from official source or [https://smpl-x.is.tue.mpg.de/](https://smpl-x.is.tue.mpg.de/).
 - Place them under `models/smplx/`.
 
 ```text
@@ -110,9 +110,9 @@ Current code reads `.npz` files from `config.yaml -> paths.smplx`.
 
 ## 6. Click&Run (Step 2): Download Datasets
 
-- Full raw dataset (Not Recommend, around 2T zip files): `[https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgA0WpGdboi7QJ_pz9LW-QRUAeoMWwFY2H00yNQcYoxDp4c?e=xcgxmY] Partially Uploaded`
-- Full processed dataset: `[URL] Comming Soon`
-- Full processed dataset (radar modality)  (Recommend, around 50G LMDB files): `[https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgCnjZ9_aIjpSa6tin8aDz-FAX46Jv3kf-n1ji-q7LwAC7s?e=SQVigW] Here`
+- Full raw dataset (Not Recommend, around 2T zip files): [Partially Uploaded](https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgA0WpGdboi7QJ_pz9LW-QRUAeoMWwFY2H00yNQcYoxDp4c?e=xcgxmY)
+- Full processed dataset: Coming Soon
+- Full processed dataset (radar modality) (Recommend, around 50G LMDB files): [Here](https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgCnjZ9_aIjpSa6tin8aDz-FAX46Jv3kf-n1ji-q7LwAC7s?e=SQVigW)
 
 After downloading processed dataset, organize folders (recommended outside repo):
 

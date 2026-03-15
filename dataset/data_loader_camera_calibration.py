@@ -95,6 +95,13 @@ def calibrate_param_to_radar(param, calib):
     param_radar = copy.deepcopy(param)
     param_radar['root_orient'] = inv_rodrigues(R_radar)
     param_radar['trans'] = T_radar + (param['trans']-param['joints'][0])
+    
+    # joint_copy = copy.deepcopy(param_radar['joints']) 
+    # for i in range(joint_copy.shape[0]):
+    #     joint_copy[i] = calib['vicon_to_cam_rotmatrix'] @ joint_copy[i]  + calib['vicon_to_cam_tvec'] / 1000
+    #     joint_copy[i] = np.linalg.inv(calib['radar_to_cam_rotmatrix']) @ (joint_copy[i] - calib['radar_to_cam_tvec']/1000)
+    # param_radar['joints'] = joint_copy + (T_radar-joint_copy[0])
+    
 
     return param_radar
 

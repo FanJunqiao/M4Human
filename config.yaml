@@ -1,0 +1,73 @@
+# ============================================================
+# M4Human — single source of truth for training + dataset config
+# ============================================================
+
+# --- I/O Paths ---
+paths:
+  # Raw data root (currently unused in training; kept for documentation)
+  data_root: '/media/jiarui/HDD1/Dataset/Edinburgh_mmwave'
+  cached_root: '../mmDataset/MR-Mesh/'
+  smplx:
+    male:    'models/smplx/SMPLX_MALE.npz'
+    female:  'models/smplx/SMPLX_FEMALE.npz'
+    neutral: 'models/smplx/SMPLX_NEUTRAL.npz'
+
+# --- Model ---
+model:
+  name:     'RT-Mesh'  # P4Transformer | RT-Mesh | RETR
+  modality: 'rawImage_XYZ'   # radar_points  | rawImage_XYZ
+
+# --- Training Hyperparameters ---
+train:
+  batch_size:     64
+  epochs:         100
+  patience:       100
+  lr:             2.0e-4
+  lr_decay_step:  5
+  lr_decay_gamma: 0.9
+  l2_lambda:      1.0e-3
+  loss_weights:
+    betas:       0.3
+    pose_body:   15
+    root_orient: 1
+    trans:       10
+    vertices:    1
+    gender:      0.5
+
+# --- Evaluation / Test ---
+eval:
+  test_mode:       false
+  test_model_path: './experiments/exp_20251007_125735/best_model_epoch5.pth'
+  plot_gif:        true
+
+# --- Dataset Split (merged from dataset_config.py) ---
+dataset:
+  protocol: 'p1'  # p1=full | p2=50% | p3=25%
+  split:    's3'  # s1=random | s2=cross-subject | s3=cross-action
+
+  all_subjects: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+  all_actions:  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
+                 21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,
+                 38,39,40,41,42,43,44,45,46,47,48,49,50]
+
+  # Sampling ratio per protocol variant
+  protocol_ratios:
+    p1: 1.0
+    p2: 0.5
+    p3: 0.25
+
+  # s2: cross-subject split
+  cross_subject:
+    test: [19, 5, 8, 10]
+    val:  [17]
+
+  # s3: cross-action split
+  cross_action:
+    test: [2, 11, 23, 28, 29, 33, 38, 43, 47, 50]
+    val:  [24, 10, 32]
+
+  # s1: random split fractions (applied per (sub, act) pair)
+  random:
+    train_ratio: 0.75
+    val_ratio:   0.05
+    test_ratio:  0.20

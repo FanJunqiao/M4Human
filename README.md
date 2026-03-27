@@ -1,16 +1,17 @@
 <div align="center">
 
 # M4Human: A large-scale Multimodal MMWAVE Radar-based 3D Human Mesh Estimation Benchmark
-This repository contains M4Human benchmark code for 3D human mesh estimation from mmWave data.
+This repository contains Mtraining and evaluation code for 3D human mesh estimation from mmWave data.
 
 </div>
 
 <div align="center">
 
-[![Python](https://img.shields.io/badge/Python-3.9-blue)](#4-environment)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.2.0-red)](#4-environment)
-[![CUDA](https://img.shields.io/badge/CUDA-11.8-green)](#4-environment)
-[![Website](https://img.shields.io/badge/Website-M4Human--site-0A66C2?style=flat-square&logo=google-chrome&logoColor=white)](https://fanjunqiao.github.io/M4Human-site/)
+
+[![PyTorch](https://img.shields.io/badge/Framework-PyTorch%202.2.0-red?logo=pytorch&logoColor=white)](#4-environment)
+[![Dataset](https://img.shields.io/badge/Dataset-Download-green?logo=database&logoColor=white)](https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgCnjZ9_aIjpSa6tin8aDz-FAX46Jv3kf-n1ji-q7LwAC7s?e=SQVigW)
+[![Paper](https://img.shields.io/badge/Paper-Read-blue?logo=readthedocs&logoColor=white)](https://arxiv.org/pdf/2512.12378)
+[![Website](https://img.shields.io/badge/Website-Visit-0A66C2?style=flat-square&logo=google-chrome&logoColor=white)](https://fanjunqiao.github.io/M4Human-site/)
 
 </div>
 
@@ -20,7 +21,9 @@ This repository contains M4Human benchmark code for 3D human mesh estimation fro
 Overview of `M4Human`, the `largest` multimodal dataset for high-fidelity mmWave radar-based human motion sensing. It covers diverse free-space motions (e.g., rehabilitation, exercise, and sports) beyond simple in-place actions, with high-quality marker-based motion annotations. Such diversity supports a broad range of human sensing tasks, including tracking, human mesh recovery, action recognition, and human motion generation, as well as privacy-preserving applications in elderly care, rehabilitation, robotics, and VR gaming.
 
 
-## 1. Project Status
+## News 🔥
+
+M4Human is released! The largest-scale multimodal mmWave human mesh benchmark, code and dataset will be available after paper publication.
 
 - Supported modalities in current code:
 `radar_points (Radar Point Cloud (RPC))`, `rawImage_XYZ (Radar Tensor (RT))`
@@ -29,9 +32,27 @@ Overview of `M4Human`, the `largest` multimodal dataset for high-fidelity mmWave
 - Clear dataset split configuration is read through `dataset/dataset_config_clean.py`.
 - Distributed training and evaluation are supported via `torchrun`. (Click and Run)
 
+## 1. Abstract
+
+Human mesh reconstruction (HMR) provides direct insights into body-environment interaction, which enables various immersive applications. While existing large-scale HMR datasets rely heavily on line-of-sight RGB input, vision-based sensing is limited by occlusion, lighting variation, and privacy concerns. To overcome these limitations, recent efforts have explored radio-frequency (RF) mmWave radar for privacy-preserving indoor human sensing. However, current radar datasets are constrained by sparse skeleton labels, limited scale, and simple in-place actions.
+
+To advance the HMR research community, we introduce M4Human, the current largest-scale (661K-frame) (9 times prior largest) multimodal benchmark, featuring high-resolution mmWave radar, RGB, and depth data. M4Human provides both raw radar tensors (RT) and processed radar point clouds (RPC) to enable research across different levels of RF signal granularity. M4Human includes high-quality motion capture (MoCap) annotations with 3D meshes and global trajectories, and spans 20 subjects and 50 diverse actions, including in-place, sit-in-place, and free-space sports or rehabilitation movements. We establish benchmarks on both RT and RPC modalities, as well as multimodal fusion with RGB-D modalities. Extensive results highlight the significance of M4Human for radar-based human modeling while revealing persistent challenges under fast, unconstrained motion. The dataset and code will be released after the paper publication.
+
+## 2. Method Overview
+
+The training loop predicts SMPL-X parameters (root center, root orientation, body shape, body pose, gender), from a sequence of T=4 frames radar inputs (RPC or RT).
+
+- Input temporal length is controlled by `temporal_window` in `dataset/m4human_dataset.py`.
+- Supervision is currently single-frame SMPL-X parameter.
+- Evaluation aggregates metrics over 50 actions.
+
+<p align="center">
+<img src="assets/method.jpg" alt="Pipeline overview"/>
+</p>
+Overview of the proposed RT-Mesh baseline. Given a 3D radar tensor (RT), RT-Mesh first reshapes it into a 2D BEV representation. A lightweight 2D BEV Transformer, combining 2D convolution and self-attention, performs efficient 2D human localization $(\hat{x},\hat{y})$ under the supervision of $\mathcal{L}_{2D}$. A local 3D RoI is cropped from the full RT volume based on $(\hat{x},\hat{y})$, which is then processed by 3D convolution and 3D Transformer to extract fine-grained 3D mesh features. Finally, an HMR head regresses SMPL-X parameters for 3D mesh.
 
 
-## 2. Repository Structure
+## 3. Repository Structure
 
 ```text
 M4Human-main/                                       
@@ -55,20 +76,8 @@ M4Human-main/
 |-- experiments/
 ```
 
-## 3. Method Overview
 
-The training loop predicts SMPL-X parameters (root center, root orientation, body shape, body pose, gender), from a sequence of T=4 frames radar inputs (RPC or RT).
-
-- Input temporal length is controlled by `temporal_window` in `dataset/m4human_dataset.py`.
-- Supervision is currently single-frame SMPL-X parameter.
-- Evaluation aggregates metrics over 50 actions.
-
-<p align="center">
-<img src="assets/method.jpg" alt="Pipeline overview"/>
-</p>
-Overview of the proposed RT-Mesh baseline. Given a 3D radar tensor (RT), RT-Mesh first reshapes it into a 2D BEV representation. A lightweight 2D BEV Transformer, combining 2D convolution and self-attention, performs efficient 2D human localization $(\hat{x},\hat{y})$ under the supervision of $\mathcal{L}_{2D}$. A local 3D RoI is cropped from the full RT volume based on $(\hat{x},\hat{y})$, which is then processed by 3D convolution and 3D Transformer to extract fine-grained 3D mesh features. Finally, an HMR head regresses SMPL-X parameters for 3D mesh.
-
-## 4. Click&Run (Step 1.1): Environment Setup
+## Click&Run (Step 1.1): Environment Setup
 
 We test our code in the following environment:
 
@@ -87,9 +96,9 @@ conda env create -f environment.yml
 
 Our point-based method requires CUDA PointNet++ acceleration. Follow the setup instructions in the P4Transformer dependency: https://github.com/erikwijmans/Pointnet2_PyTorch. RT-based does not require CUDA setup.
 
-## 5. Click&Run (Step 1.2): SMPL Models Setup
+## Click&Run (Step 1.2): SMPL Models Setup
 
-- Download SMPL models from official source or [https://smpl-x.is.tue.mpg.de/](https://smpl-x.is.tue.mpg.de/).
+- Download SMPL models from official source or `https://smpl-x.is.tue.mpg.de/`.
 - Place them under `models/smplx/`.
 
 ```text
@@ -108,11 +117,11 @@ M4Human-main/
 
 Current code reads `.npz` files from `config.yaml -> paths.smplx`.
 
-## 6. Click&Run (Step 2): Download Datasets
+## Click&Run (Step 2): Download Datasets
 
-- Full raw dataset (Not Recommend, around 2T zip files): [Partially Uploaded](https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgA0WpGdboi7QJ_pz9LW-QRUAeoMWwFY2H00yNQcYoxDp4c?e=xcgxmY)
-- Full processed dataset: Coming Soon
-- Full processed dataset (radar modality) (Recommend, around 50G LMDB files): [Here](https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgCnjZ9_aIjpSa6tin8aDz-FAX46Jv3kf-n1ji-q7LwAC7s?e=SQVigW)
+- Full raw dataset (around 2T zip files): `[https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgA0WpGdboi7QJ_pz9LW-QRUAeoMWwFY2H00yNQcYoxDp4c?e=xcgxmY] Partially Uploaded`
+<!-- - Full processed dataset: `[URL] Comming Soon` -->
+- Full processed dataset (radar modality)  (Recommend, around 50G LMDB files): `[https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgCnjZ9_aIjpSa6tin8aDz-FAX46Jv3kf-n1ji-q7LwAC7s?e=SQVigW] Here`
 
 After downloading processed dataset, organize folders (recommended outside repo):
 
@@ -122,12 +131,13 @@ mmDataset/                         # (Full processed dataset)
     MR-Mesh/
         rf3dpose_all/
             calib.lmdb
-            image.lmdb
-            depth.lmdb
+            radar_comp.lmdb        # (RT)
+            radar_comp.lmdb-lock
             radar_pc.lmdb          # (RPC)
+            radar_pc.lmdb-lock
             params.lmdb            # (GT params)
             indeces.pkl.gz         # (dataset split configuration)
-            ... (other .lmdb and .lock files)
+            ... (other .lmdb and lmdb-lock files)
 ```
 
 Training cache path is configured by `config.yaml`:
@@ -151,7 +161,7 @@ Expected LMDB set in loader:
 ```
 
 
-## 7. Click&Run (Step 3): Check Experiment Configuration (`config.yaml`)
+## Click&Run (Step 3): Check Experiment Configuration (`config.yaml`)
 
 Benchmark behavior is controlled by `config.yaml`. 
 
@@ -190,7 +200,7 @@ Notes:
 - Point modality applies z-offset normalization (`-1.5`) in dataset loader.
 - Input uses temporal context (`temporal_window` in `dataset/m4human_dataset.py`), while supervision is single-frame.
 
-## 8. Click&Run (Step 4): Benchmarking (Radar Modality Only)
+## Click&Run (Step 4): Benchmarking (Radar Modality Only)
 
 To train the benchmark: (Modify GPU num, currently 4)
 
@@ -213,7 +223,7 @@ torchrun --nproc_per_node=4 main1_multigpu_clean.py
 ```
 
 
-## 9. Outputs
+## Outputs
 
 Outputs are saved to `experiments/exp_YYYYMMDD_HHMMSS/`:
 
@@ -234,7 +244,7 @@ Our benchmark reports:
 
 Metrics are aggregated per action.
 
-## 11. Citation
+## Citation
 
 If this project helps your research, please cite your paper here:
 
@@ -247,7 +257,7 @@ If this project helps your research, please cite your paper here:
 }
 ```
 
-## 12. Acknowledgements
+## Acknowledgements
 
 - PyTorch ecosystem
 - Related mmWave and human mesh estimation projects

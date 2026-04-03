@@ -1,6 +1,6 @@
 <div align="center">
 
-# M4Human: A large-scale Multimodal MMWAVE Radar-based 3D Human Mesh Estimation Benchmark
+# M4Human: A large-scale Multimodal mmWave Radar-based 3D Human Mesh Estimation Benchmark
 This repository contains Mtraining and evaluation code for 3D human mesh estimation from mmWave data.
 
 </div>

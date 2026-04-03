@@ -18,7 +18,8 @@ This repository contains Mtraining and evaluation code for 3D human mesh estimat
 <p align="center">
 <img src="assets/teaser.png" alt="M4Human teaser"/>
 </p>
-Overview of `M4Human`, the `largest` multimodal dataset for high-fidelity mmWave radar-based human motion sensing. It covers diverse free-space motions (e.g., rehabilitation, exercise, and sports) beyond simple in-place actions, with high-quality marker-based motion annotations. Such diversity supports a broad range of human sensing tasks, including tracking, human mesh recovery, action recognition, and human motion generation, as well as privacy-preserving applications in elderly care, rehabilitation, robotics, and VR gaming.
+
+Overview of `M4Human`, the current `largest` multimodal dataset for high-fidelity mmWave radar-based human motion sensing. It covers diverse free-space motions (e.g., rehabilitation, exercise, and sports) beyond simple in-place actions, with high-quality marker-based motion annotations. Such diversity supports a broad range of human sensing tasks, including tracking, human mesh recovery, action recognition, and human motion generation, as well as privacy-preserving applications in elderly care, rehabilitation, robotics, and VR gaming.
 
 
 ## News 🔥
@@ -48,8 +49,8 @@ The training loop predicts SMPL-X parameters (root center, root orientation, bod
 
 <p align="center">
 <img src="assets/method.jpg" alt="Pipeline overview"/>
-</p>
-Overview of the proposed RT-Mesh baseline. Given a 3D radar tensor (RT), RT-Mesh first reshapes it into a 2D BEV representation. A lightweight 2D BEV Transformer, combining 2D convolution and self-attention, performs efficient 2D human localization $(\hat{x},\hat{y})$ under the supervision of $\mathcal{L}_{2D}$. A local 3D RoI is cropped from the full RT volume based on $(\hat{x},\hat{y})$, which is then processed by 3D convolution and 3D Transformer to extract fine-grained 3D mesh features. Finally, an HMR head regresses SMPL-X parameters for 3D mesh.
+
+Overview of the proposed RT-Mesh baseline. Given a 3D radar tensor (RT), RT-Mesh first reshapes it into a 2D BEV representation. A lightweight 2D BEV Transformer, combining 2D convolution and self-attention, performs efficient 2D human localization $(\hat{x}, \hat{y})$ under the supervision of $\mathcal{L}_{2D}$. A local 3D RoI is cropped from the full RT volume based on $(\hat{x}, \hat{y})$, which is then processed by 3D convolution and 3D Transformer to extract fine-grained 3D mesh features. Finally, an HMR head regresses SMPL-X parameters for 3D mesh.
 
 
 ## 3. Repository Structure
@@ -119,9 +120,9 @@ Current code reads `.npz` files from `config.yaml -> paths.smplx`.
 
 ## Click&Run (Step 2): Download Datasets
 
-- Full raw dataset (around 2T zip files): `[https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgA0WpGdboi7QJ_pz9LW-QRUAeoMWwFY2H00yNQcYoxDp4c?e=xcgxmY] Partially Uploaded`
-<!-- - Full processed dataset: `[URL] Comming Soon` -->
-- Full processed dataset (radar modality)  (Recommend, around 50G LMDB files): `[https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgCnjZ9_aIjpSa6tin8aDz-FAX46Jv3kf-n1ji-q7LwAC7s?e=SQVigW] Here`
+- Full raw dataset (around 2T zip files (Partially Uploaded)): [Here](https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgA0WpGdboi7QJ_pz9LW-QRUAeoMWwFY2H00yNQcYoxDp4c?e=xcgxmY)
+<!-- - Full processed dataset: Coming Soon -->
+- Full processed dataset (radar modality) (recommended, around 50G LMDB files): [Here](https://entuedu-my.sharepoint.com/:f:/g/personal/fanj0019_e_ntu_edu_sg/IgB2wdU_5tJ3S403VafC_q-mAcTVON3VY48SpwUsw4i9Egk?e=6zCncR)
 
 After downloading processed dataset, organize folders (recommended outside repo):
 

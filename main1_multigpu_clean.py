@@ -71,7 +71,7 @@ def load_config(path: str = "config.yaml") -> dict:
         "test_model_path":    raw["eval"]["test_model_path"],
         "plot_gif":           raw["eval"]["plot_gif"],
         # dataset split
-        "protocol":           raw["dataset"]["protocol"],
+        "scale":              raw["dataset"]["scale"],
         "split":              raw["dataset"]["split"],
     }
     return cfg
@@ -111,7 +111,6 @@ def get_unique_exp_path(base_path: str = "experiments") -> str:
     exp_path = os.path.join(base_path, f"exp_{timestamp}")
     os.makedirs(exp_path, exist_ok=True)
     return exp_path
-
 
 def setup_logger(log_path: str) -> logging.Logger:
     """Attach file + console handlers on rank-0 only to avoid duplicate log lines."""
@@ -231,19 +230,19 @@ def final_training(config: dict, exp_path: str, logger: logging.Logger):
         [], cache_dir=config["cached_root"], split="train",
         transform=transforms.Compose([ToTensor()]),
         load_save=load_save, main_modality=config["modality"],
-        protocol_id=config["protocol"], split_id=config["split"],
+        scale_id=config["scale"], split_id=config["split"],
     )
     val_dataset = RF3DPoseDataset(
         [], cache_dir=config["cached_root"], split="val",
         transform=transforms.Compose([ToTensor()]),
         load_save=load_save, main_modality=config["modality"],
-        protocol_id=config["protocol"], split_id=config["split"],
+        scale_id=config["scale"], split_id=config["split"],
     )
     test_dataset = RF3DPoseDataset(
         [], cache_dir=config["cached_root"], split="test",
         transform=transforms.Compose([ToTensor()]),
         load_save=load_save, main_modality=config["modality"],
-        protocol_id=config["protocol"], split_id=config["split"],
+        scale_id=config["scale"], split_id=config["split"],
     )
 
     # --- DataLoaders with DistributedSampler ---
@@ -326,7 +325,7 @@ def final_training(config: dict, exp_path: str, logger: logging.Logger):
         criterion2       = nn.MSELoss()
         gender_criterion = nn.BCELoss()
 
-        best_val_loss    = float("inf")
+        best_test_mve    = float("inf")
         patience_counter = 0
         gradient_clip    = False
         log_gradient_norm = False
@@ -411,14 +410,15 @@ def final_training(config: dict, exp_path: str, logger: logging.Logger):
 
             # --- Checkpoint on improvement ---
             if is_main_process():
-                if val_loss < best_val_loss:
-                    best_val_loss    = val_loss
+                current_test_mve = global_results["vertex"]
+                if current_test_mve < best_test_mve:
+                    best_test_mve    = current_test_mve
                     patience_counter = 0
                     torch.save(
                         unwrap_model(model).state_dict(),
                         os.path.join(exp_path, f"best_model_epoch{epoch // 5}.pth"),
                     )
-                    logger.info("Model improved. Saved best model.")
+                    logger.info(f"Model improved on test MVE ({current_test_mve:.4f}). Saved best model.")
                 else:
                     patience_counter += 1
                     if patience_counter >= config["patience"]:

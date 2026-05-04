@@ -1,0 +1,36 @@
+2026-05-04 11:36:57,719 - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-05-04 11:36:57,719 - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-05-04 11:36:57,719 - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-05-04 11:36:57,719 - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-05-04 11:36:59,052 - Added key: store_based_barrier_key:1 to store for rank: 1
+2026-05-04 11:36:59,078 - Added key: store_based_barrier_key:1 to store for rank: 3
+2026-05-04 11:36:59,101 - Added key: store_based_barrier_key:1 to store for rank: 2
+2026-05-04 11:36:59,117 - Added key: store_based_barrier_key:1 to store for rank: 0
+2026-05-04 11:36:59,117 - Rank 0: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2026-05-04 11:36:59,119 - Rank 3: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2026-05-04 11:36:59,121 - Rank 2: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2026-05-04 11:36:59,124 - Rank 1: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2026-05-04 11:37:39,829 - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-05-04 11:37:39,838 - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-05-04 11:37:39,856 - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-05-04 11:37:39,868 - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-05-04 11:37:40,872 - Added key: store_based_barrier_key:1 to store for rank: 2
+2026-05-04 11:37:40,904 - Added key: store_based_barrier_key:1 to store for rank: 0
+2026-05-04 11:37:40,912 - Added key: store_based_barrier_key:1 to store for rank: 1
+2026-05-04 11:37:40,925 - Added key: store_based_barrier_key:1 to store for rank: 3
+2026-05-04 11:37:40,925 - Rank 3: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2026-05-04 11:37:40,932 - Rank 1: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2026-05-04 11:37:40,933 - Rank 2: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2026-05-04 11:37:40,935 - Rank 0: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2026-05-04 11:41:33,392 - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-05-04 11:41:33,419 - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-05-04 11:41:33,448 - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-05-04 11:41:33,472 - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-05-04 11:41:34,649 - Added key: store_based_barrier_key:1 to store for rank: 2
+2026-05-04 11:41:34,659 - Added key: store_based_barrier_key:1 to store for rank: 0
+2026-05-04 11:41:34,675 - Added key: store_based_barrier_key:1 to store for rank: 1
+2026-05-04 11:41:34,680 - Added key: store_based_barrier_key:1 to store for rank: 3
+2026-05-04 11:41:34,680 - Rank 3: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2026-05-04 11:41:34,680 - Rank 2: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2026-05-04 11:41:34,686 - Rank 1: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2026-05-04 11:41:34,690 - Rank 0: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.

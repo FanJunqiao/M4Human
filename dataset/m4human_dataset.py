@@ -55,7 +55,7 @@ class RF3DPoseDataset(Dataset):
         temporal_window=4,
         normalize_flag=True,
         main_modality="radar_points",
-        protocol_id="p3",
+        scale_id="p3",
         split_id="s2",
     ):
         assert split in ["train", "val", "test"]
@@ -133,7 +133,7 @@ class RF3DPoseDataset(Dataset):
         else:
             split_indicator_lists = load_idx_to_file(path=self.indices_saved_file)
 
-        self.indicator_list = split_indicator_lists[protocol_id][split_id][self.split]
+        self.indicator_list = split_indicator_lists[scale_id][split_id][self.split]
 
         print(f"Loaded {self.split} Dataset with length {len(self.indicator_list)}.")
         test_subs = sorted({s for s, a, f in self.indicator_list})

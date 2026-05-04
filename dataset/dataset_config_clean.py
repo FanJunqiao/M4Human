@@ -26,16 +26,16 @@ def _load_dataset_cfg(config_path=None) -> Dict:
 
 
 # ---------------------------------------------------------------------------
-# Protocol builder  (replaces the old hardcoded info_init)
+# Scale builder  (replaces the old hardcoded info_init)
 # ---------------------------------------------------------------------------
 
-def info_init(p_id: str = "p1", config_path=None) -> Dict:
+def info_init(scale_id: str = "p1", config_path=None) -> Dict:
     """
-    Build the protocol dict for all three split schemes (s1/s2/s3).
+    Build the scale dict for all three split schemes (s1/s2/s3).
     Reads subject lists, action lists, and ratios from config.yaml.
     """
     ds = _load_dataset_cfg(config_path)
-    ratio = ds["protocol_ratios"][p_id]
+    ratio = ds["scale_ratios"][scale_id]
 
     all_sub = ds["all_subjects"]
     all_act = ds["all_actions"]
@@ -89,7 +89,7 @@ def split_ok_pool(pool, out_train, out_val, out_test):
 
 def split_indices(
     index_list: List[List[int]],
-    protocol: Dict[str, Dict[str, Dict[str, Any]]],
+    scale_cfg: Dict[str, Dict[str, Dict[str, Any]]],
     scheme: str = "s1",
     seed: int = 42,
 ) -> Dict[str, List]:
@@ -98,7 +98,7 @@ def split_indices(
     index_list items: [sub_id, act_id, frame_id]
     """
     rng = random.Random(seed)
-    cfg = protocol[scheme]
+    cfg = scale_cfg[scheme]
 
     all_sub, all_act = set(cfg["all"][0]), set(cfg["all"][1])
     filtered = [[s, a, f] for s, a, f in index_list if s in all_sub and a in all_act]
@@ -165,18 +165,18 @@ def split_indices(
 def save_idx_to_file(
     in_indicator_list,
     path: str = "indeces.pkl.gz",
-    all_protocols: List[str] = ["p1", "p2", "p3"],
+    all_scales: List[str] = ["p1", "p2", "p3"],
     all_splits: List[str] = ["s1", "s2", "s3"],
 ):
     print(f"Save indices to {path}.")
     dataset_split = {}
-    for pk in all_protocols:
-        dataset_split[pk] = {}
+    for sk in all_scales:
+        dataset_split[sk] = {}
         for s in all_splits:
-            protocol = info_init(p_id=pk)
-            dataset_split[pk][s] = split_indices(in_indicator_list, protocol=protocol, scheme=s)
+            scale_cfg = info_init(scale_id=sk)
+            dataset_split[sk][s] = split_indices(in_indicator_list, scale_cfg=scale_cfg, scheme=s)
     with gzip.open(path, "wb") as f:
-        pickle.dump(dataset_split, f, protocol=pickle.HIGHEST_PROTOCOL)
+        pickle.dump(dataset_split, f, -1)
 
 
 def load_idx_to_file(path: str = "indeces.pkl.gz"):

@@ -175,7 +175,7 @@ Benchmark behavior is controlled by `config.yaml`.
 | `train.loss_weights.*` | Weighted terms in `combined_loss` | float |
 | `eval.test_mode` | Evaluation-only mode | `true/false` |
 | `eval.plot_gif` | Save GIF during eval | `true/false` |
-| `dataset.protocol` | Ratio protocol | `p1`, `p2`, `p3` |
+| `dataset.scale` | Scale ratio | `p1`, `p2`, `p3` |
 | `dataset.split` | Split strategy | `s1`, `s2`, `s3` |
 
 Valid model-modality combinations:
@@ -197,7 +197,7 @@ Per sample from `dataset/m4human_dataset.py`:
 - `calibration`: calibration dict
 
 Notes:
-- Protocol is different from (IP, SIP, NIP) in main paper, controlling how much porpotion of dataset is used. For example, we can choose 'p3' with 25% of subjects for fast training and evaluating (see dataset size VS performance in Fig. 5 (main paper)). (IP, SIP, NIP) are directly reported in the results table.
+- Scale is different from (IP, SIP, NIP) in main paper, controlling how much porpotion of dataset is used. For example, we can choose 'p3' with 25% of subjects for fast training and evaluating (see dataset size VS performance in Fig. 5 (main paper)). (IP, SIP, NIP) are directly reported in the results table.
 - Point modality applies z-offset normalization (`-1.5`) in dataset loader.
 - Input uses temporal context (`temporal_window` in `dataset/m4human_dataset.py`), while supervision is single-frame.
 
